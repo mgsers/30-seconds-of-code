@@ -433,20 +433,20 @@ average(1, 2, 3);
 </details>
 
 ---
- ## 🔌 Adapter
+ ## 🔌 适配器
 
-### ary
+### ary(形参控制器)
 
-Creates a function that accepts up to `n` arguments, ignoring any additional arguments.
+创建一个只接受n个参数，而忽略其他额外参数的函数
 
-Call the provided function, `fn`, with up to `n` arguments, using `Array.slice(0,n)` and the spread operator (`...`).
+调用传入的 `fn` 函数以及形参 `n`， 使用 `Array.slice(0,n)` 和 (`...`)扩展符.
 
 ```js
 const ary = (fn, n) => (...args) => fn(...args.slice(0, n));
 ```
 
 <details>
-<summary>Examples</summary>
+<summary>例子</summary>
 
 ```js
 const firstTwoMax = ary(Math.max, 2);
@@ -458,10 +458,11 @@ const firstTwoMax = ary(Math.max, 2);
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### call
+### call(调用)
 
-Given a key and a set of arguments, call them when given a context. Primarily useful in composition.
+通过一个键名key以及一系列参数，在给定的作用域下进行调用，这十分高效
 
+使用闭包去调用一个储存的键名key和参数
 Use a closure to call a stored key with stored arguments.
 
 ```js
@@ -469,7 +470,7 @@ const call = (key, ...args) => context => context[key](...args);
 ```
 
 <details>
-<summary>Examples</summary>
+<summary>例子</summary>
 
 ```js
 Promise.resolve([1, 2, 3])
@@ -486,10 +487,11 @@ Promise.resolve([1, 2, 3])
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### collectInto
+### collectInto(收纳)
 
-Changes a function that accepts an array into a variadic function.
+将只接受一个数组的函数变成一个可变参数的函数
 
+给定一个函数，返回一个收集了所有参数的接收数组的函数的闭包
 Given a function, return a closure that collects all inputs into an array-accepting function.
 
 ```js
@@ -497,7 +499,7 @@ const collectInto = fn => (...args) => fn(args);
 ```
 
 <details>
-<summary>Examples</summary>
+<summary>例子</summary>
 
 ```js
 const Pall = collectInto(Promise.all.bind(Promise));
@@ -512,10 +514,11 @@ Pall(p1, p2, p3).then(console.log); // [1, 2, 3] (after about 2 seconds)
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### flip
+### flip(弹跳)
 
-Flip takes a function as an argument, then makes the first argument the last.
+将一个函数作为参数，然后将第一个实参放置到最后一个位置
 
+返回一个可变参数的闭包，并且在调用之前将最后的参数提到第一个参数
 Return a closure that takes variadic inputs, and splices the last argument to make it the first argument before applying the rest.
 
 ```js
@@ -756,13 +759,14 @@ const unary = fn => val => fn(val);
 ---
  ## 📚 Array
 
-### chunk
+### chunk（打包）
 
-Chunks an array into smaller arrays of a specified size.
+将一个数组打包成指定大小的若干小数组
 
-Use `Array.from()` to create a new array, that fits the number of chunks that will be produced.
-Use `Array.slice()` to map each element of the new array to a chunk the length of `size`.
-If the original array can't be split evenly, the final chunk will contain the remaining elements.
+使用 `Array.from()` 创建一个新的数组，之后对应指定大小的小数组将会输出
+使用 `Array.slice()` 让每一个新的数组都为 `size` 一样的长度
+
+如果原始数组无法被均匀拆分，则最后的数组将包含剩余的元素
 
 ```js
 const chunk = (arr, size) =>
@@ -772,7 +776,7 @@ const chunk = (arr, size) =>
 ```
 
 <details>
-<summary>Examples</summary>
+<summary>例子</summary>
 
 ```js
 chunk([1, 2, 3, 4, 5], 2); // [[1,2],[3,4],[5]]
@@ -783,11 +787,11 @@ chunk([1, 2, 3, 4, 5], 2); // [[1,2],[3,4],[5]]
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### compact
+### compact（使之紧凑）
 
-Removes falsey values from an array.
+从数组中去除 `falsey` 类型值 
 
-Use `Array.filter()` to filter out falsey values (`false`, `null`, `0`, `""`, `undefined`, and `NaN`).
+直接使用 `Array.filter()` 将`falsey` 类型值 (`false`, `null`, `0`, `""`, `undefined`, and `NaN`)去除
 
 ```js
 const compact = arr => arr.filter(Boolean);
