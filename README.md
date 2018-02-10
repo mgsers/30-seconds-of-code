@@ -518,15 +518,14 @@ Pall(p1, p2, p3).then(console.log); // [1, 2, 3] (after about 2 seconds)
 
 将一个函数作为参数，然后将第一个实参放置到最后一个位置
 
-返回一个可变参数的闭包，并且在调用之前将最后的参数提到第一个参数
-Return a closure that takes variadic inputs, and splices the last argument to make it the first argument before applying the rest.
+返回一个可变参数的闭包，并且在调用之前将最后的参数提升为第一个参数
 
 ```js
 const flip = fn => (first, ...rest) => fn(...rest, first);
 ```
 
 <details>
-<summary>Examples</summary>
+<summary>例子</summary>
 
 ```js
 let a = { name: 'John Smith' };
@@ -545,9 +544,9 @@ Object.assign(b, a); // == b
 
 ### over
 
-Creates a function that invokes each provided function with the arguments it receives and returns the results.
+创建一个函数,调用每个函数的参数提供它接收并返回结果
 
-Use `Array.map()` and `Function.apply()` to apply each function to the given arguments.
+使用 `Array.map()` 和 `Function.apply()` 将给定的参数应用到每一个函数
 
 ```js
 const over = (...fns) => (...args) => fns.map(fn => fn.apply(null, args));
@@ -837,18 +836,18 @@ countBy(['one', 'two', 'three'], 'length'); // {3: 2, 5: 1}
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### countOccurrences
+### countOccurrences（计算出现次数）
 
-Counts the occurrences of a value in an array.
+计算一个数值在数组中出现的次数
 
-Use `Array.reduce()` to increment a counter each time you encounter the specific value inside the array.
+使用 `Array.reduce()` 每次当在数组中找到特定值时进行计数
 
 ```js
 const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a + 0), 0);
 ```
 
 <details>
-<summary>Examples</summary>
+<summary>例子</summary>
 
 ```js
 countOccurrences([1, 1, 2, 1, 2, 3], 1); // 3
@@ -859,20 +858,20 @@ countOccurrences([1, 1, 2, 1, 2, 3], 1); // 3
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### deepFlatten
+### deepFlatten（深层扁平化）
 
-Deep flattens an array.
+深层扁平化一个数组
 
-Use recursion.
-Use `Array.concat()` with an empty array (`[]`) and the spread operator (`...`) to flatten an array.
-Recursively flatten each element that is an array.
+使用递归的方法。
+使用 `Array.concat()` 配合空数组（[]）以及扩展操作符（'...'）对数组进行扁平化处理
+递归式地使数组进行扁平化处理
 
 ```js
 const deepFlatten = arr => [].concat(...arr.map(v => (Array.isArray(v) ? deepFlatten(v) : v)));
 ```
 
 <details>
-<summary>Examples</summary>
+<summary>例子</summary>
 
 ```js
 deepFlatten([1, [2], [[3], 4], 5]); // [1,2,3,4,5]
@@ -883,11 +882,11 @@ deepFlatten([1, [2], [[3], 4], 5]); // [1,2,3,4,5]
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### difference
+### difference（找不同）
 
-Returns the difference between two arrays.
+返回两个数组间不同的值
 
-Create a `Set` from `b`, then use `Array.filter()` on `a` to only keep values not contained in `b`.
+创建 'b' 的 Set 实例，然后使用 `Array.filter()` 找出 'a' 中有而 'b' 中没有的项
 
 ```js
 const difference = (a, b) => {
@@ -897,7 +896,7 @@ const difference = (a, b) => {
 ```
 
 <details>
-<summary>Examples</summary>
+<summary>例子</summary>
 
 ```js
 difference([1, 2, 3], [1, 2, 4]); // [3]
@@ -956,18 +955,18 @@ differenceWith([1, 1.2, 1.5, 3, 0], [1.9, 3, 0], (a, b) => Math.round(a) === Mat
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### drop
+### drop（丢弃）
 
-Returns a new array with `n` elements removed from the left.
+返回一个新的数组，这个数组左边的 'n' 个元素被移除
 
-Use `Array.slice()` to slice the remove the specified number of elements from the left.
+使用 `Array.slice()` 从数组的左边删除指定数量的元素
 
 ```js
 const drop = (arr, n = 1) => arr.slice(n);
 ```
 
 <details>
-<summary>Examples</summary>
+<summary>例子</summary>
 
 ```js
 drop([1, 2, 3]); // [2,3]
@@ -980,18 +979,18 @@ drop([1, 2, 3], 42); // []
 <br>[⬆ Back to top](#table-of-contents)
 
 
-### dropRight
+### dropRight（丢弃[右侧]）
 
-Returns a new array with `n` elements removed from the right.
+返回一个新的数组，这个数组右边的 'n' 个元素被移除
 
-Use `Array.slice()` to slice the remove the specified number of elements from the right.
+使用 `Array.slice()` 从数组的右边删除指定数量的元素
 
 ```js
 const dropRight = (arr, n = 1) => arr.slice(0, -n);
 ```
 
 <details>
-<summary>Examples</summary>
+<summary>例子</summary>
 
 ```js
 dropRight([1, 2, 3]); // [1,2]
